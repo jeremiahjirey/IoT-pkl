@@ -1,0 +1,38 @@
+Resources:
+  MariaDBSubnetGroup: 
+    Type: AWS::RDS::DBSubnetGroup
+    Properties: 
+      DBSubnetGroupDescription: Description of subnet group
+      SubnetIds: 
+        - subnet-0d54acf6b3fcedd02
+        - subnet-0425a18bb00a54c01
+        - subnet-09a21b2bff130e4b3
+
+  Sg-Db:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security Group For Database
+      VpcId: vpc-0d9d8c35eb79a2fe4
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: SG-DB
+  MariaDBInstance:    
+    Type: AWS::RDS::DBInstance
+    Properties:
+      Engine: mariadb
+      DBInstanceIdentifier: lksn-database-jateng
+      DBName: dbiot
+      DBInstanceClass: db.t3.micro
+      StorageType: gp2
+      AllocatedStorage: 20
+      MasterUsername: admin
+      MasterUserPassword: Lksncc2024!
+      MultiAZ: false
+      PubliclyAccessible: false
+      DBSubnetGroupName: !Ref MariaDBSubnetGroup
+      VPCSecurityGroups: !Ref Sg-Db

@@ -1,0 +1,9 @@
+Resources:
+  NotebookInstance:
+    Type: "AWS::SageMaker::NotebookInstance"
+    Properties:
+      NotebookInstanceName: mliot-jawatengah
+      InstanceType: ml.t3.medium
+      RoleArn: arn:aws:iam::225783006306:role/LabRole
+      RootAccess: Enabled
+      PlatformIdentifier: notebook-al2-v2

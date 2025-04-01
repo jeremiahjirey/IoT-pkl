@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "aws-iot-device-sdk-v2": "^1.21.1",
+    "dotenv": "^16.4.7",
+    "winston": "^3.17.0"
+  },
+  "name": "lksn24-iotml",
+  "version": "1.0.0",
+  "description": "Resource for LKSN - Cloud Computing 2024",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

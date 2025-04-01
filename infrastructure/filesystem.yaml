@@ -1,0 +1,15 @@
+Resources:
+  WebBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+        BucketName: lks-bucketweb-jateng
+
+  FirehoseBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+        BucketName: lks-bucketfirehose-jateng
+
+  ModelBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+        BucketName: lks-bucketmodel-jateng

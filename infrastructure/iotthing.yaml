@@ -1,0 +1,60 @@
+Resources:
+  IoTPolicy:
+    Type: AWS::IoT::Policy
+    Properties:
+      PolicyName: lksn-policy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Action:
+              - "*"
+            Resource: "*"
+ 
+  IoTThing:
+    Type: AWS::IoT::Thing
+    Properties:
+      ThingName: lksiot
+
+  
+
+  IoTPolicyAttachment:
+    Type: AWS::IoT::PolicyPrincipalAttachment
+    Properties:
+      PolicyName: !Ref IoTPolicy
+      Principal: arn:aws:iot:us-west-2:225783006306:cert/3b4c544ae3d312f64b8cacb0ea256e6598af2d2c6b7ef1fb47ead120a4e841da #certificateArn
+ 
+  IoTThingPrincipalAttachment:
+    Type: AWS::IoT::ThingPrincipalAttachment
+    Properties:
+      ThingName: !Ref IoTThing
+      Principal: arn:aws:iot:us-west-2:225783006306:cert/3b4c544ae3d312f64b8cacb0ea256e6598af2d2c6b7ef1fb47ead120a4e841da  #certificateArn
+ 
+  MyRule1:
+      Type: AWS::IoT::TopicRule
+      Properties:
+        RuleName: iotrule
+        TopicRulePayload:
+          Sql: SELECT "*" AS data FROM "*"
+          Actions:
+            - Firehose:
+                  DeliveryStreamName: LKS-Firehouse-2024
+                  RoleArn: arn:aws:iam::225783006306:role/LabRole
+          AwsIotSqlVersion: '2016-03-23'
+          Description: Rules for Devices connect to Analytics
+          RuleDisabled: false
+         
+  MyRule2:
+      Type: AWS::IoT::TopicRule
+      Properties:
+        RuleName: kinesis
+        TopicRulePayload:
+          Sql: SELECT "*" AS data FROM "*"
+          Actions:
+            - Kinesis:
+                  StreamName: lksdatastreamiot
+                  PartitionKey: ${newuuid()}
+                  RoleArn: arn:aws:iam::225783006306:role/LabRole
+          AwsIotSqlVersion: '2016-03-23'
+          Description: Rules for Devices connect to Analytics
+          RuleDisabled: false
